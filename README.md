@@ -12,7 +12,7 @@ Either clone the [git](https://git-scm.com/) repository:
 git clone git@github.com:ansost/NoClu.git
 ```
 
-Or [download a zip archive](https://github.com/ansost/NoClu/archive/refs/heads/main.zip).
+Or [download a zip archive](https://github.com/ansost/kinyarwanda-storyboard/archive/refs/heads/main.zip).
 
 ### Requirements
 
