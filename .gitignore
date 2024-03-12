@@ -1,2 +1,8 @@
-# ignore venv
+# venv
 kinV
+
+# mfa dev build
+Montreal-Forced-Aligner
+
+# fleurs dataset
+data/fleurs/
