@@ -16,32 +16,47 @@ from tqdm.auto import tqdm
 tqdm.pandas()
 
 
-def transcribe_word(words: str) -> List[List[Any]]:
+def transcribe_word(word: str) -> List[str]:
     """Transcribe a word to segments using epitran."""
-    word_list = words.split()
-    transcriptions = [epi.word_to_segs(x) for x in word_list]
-    return transcriptions
+    transcriptions = epi.word_to_segs(word)
+    ipa = [tuples[3] for tuples in transcriptions]
+    return ipa
+
+
+def clean_word(word: str) -> str:
+    """Clean the word to remove punctuation."""
+    cleaned_word = []
+    for character in word:
+        if character.isalpha():
+            cleaned_word.append(character)
+    word = "".join(cleaned_word)
+    return word
+
+
+def generate_dict_entry(orthrographic_transcription, pronunciation_dict) -> None:
+    """Get the ipa representation of the transcriptions."""
+    word_list = orthrographic_transcription.split()
+    for word in word_list:
+        word = clean_word(word)
+        ipa = transcribe_word(word)
+        pronunciation_dict[word] = ipa
 
 
 if __name__ == "__main__":
     epi = epitran.vector.VectorsWithIPASpace("kin-Latn", ["kin-Latn"])
-
     fleurs = ["train", "test", "dev"]
 
+    all_pronunciations = {}
     for dataset in fleurs:
         df = pd.read_csv(
             f"../../data/fleurs/{dataset}.tsv",
             sep="\t",
             usecols=["orthographic_transcription"],
         )
-        df["epitran_transcription"] = df["orthographic_transcription"].progress_apply(
-            transcribe_word
-        )
-        df.to_csv(f"../../data/fleurs/{dataset}.csv", index=False)
+        for transcription in tqdm(df["orthographic_transcription"]):
+            generate_dict_entry(transcription, all_pronunciations)
 
-        pronunciation_dict = dict(
-            zip(df["orthographic_transcription"], df["epitran_transcription"])
-        )
-        with open("../../data/epifleur_pronunciation_dict.tsv", "w") as f:
-            for key in pronunciation_dict.keys():
-                f.write("%s\t%s\n" % (key, pronunciation_dict[key]))
+    with open("../../data/epifleur_pronunciation_dict.tsv", "w") as f:
+        for key, value in all_pronunciations.items():
+            if value:
+                f.write("%s\t%s\n" % (key, " ".join(value)))
