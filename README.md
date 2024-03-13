@@ -34,6 +34,10 @@ The calculations and figure generation are run in [Python](https://www.python.or
 
 This repository uses pre-commit hooks. Learn more about them and how to install/use them here: [https://pre-commit.com/](https://pre-commit.com/).
 
+NOTE: The kinyarwanda g2p data has to be copied manually using
+```sh
+ cp kin-Latn.csv <path to your venv>/<your venv name>/lib/python3.11/site-packages/epitran/data/space
+```
 
 ### Data
 
