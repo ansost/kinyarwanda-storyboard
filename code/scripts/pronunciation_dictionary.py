@@ -1,5 +1,6 @@
 """Transcibe the words in fleurs and the textgrids using the Epitran library.
-Saves the transcription in a new column and saves the word to transcription dictionary in a tsv file.
+Saves the transcription in a new column and saves the word to transcription dictionary in a txt file.
+The file is tab-delimited but mfa does not allow the extension ".tsv".
 
 NOTE: The kinyarwanda g2p dictionary has to be copied into the epitran data directory manually (See README).
 
@@ -69,7 +70,7 @@ if __name__ == "__main__":
     for word in tqdm(words):
         generate_dict_entry(word, all_pronunciations)
 
-    with open("../../data/fleurtg_pronunciation_dict.tsv", "w+") as f:
+    with open("../../data/fleurtg_pronunciation_dict.txt", "w+") as f:
         for key, value in all_pronunciations.items():
             if value and value != [""]:
                 f.write("%s\t%s\n" % (key, " ".join(value)))
