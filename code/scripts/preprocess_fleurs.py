@@ -1,11 +1,6 @@
-"""Downloads and preprocesses the Fleurs dataset for kinyarwanda.
-
-NOTES: For a detailed column description, see the README of the dataset on huggingface.
-
-WIP NOTES:
-    - get pronunciation dictionary for words from dataset.
-    - get phone set from dataset
-    - is the data duplicated in the train set?
+"""Add column names to the Fleurs dataset for kinyarwanda.
+Data from: https://huggingface.co/datasets/mbazaNLP/fleurs-kinyarwanda
+For a detailed column description, see the README of the dataset on huggingface.
 
 Usage:
     python get_preprocess_fleurs.py
