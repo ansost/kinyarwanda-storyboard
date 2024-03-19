@@ -4,5 +4,11 @@ kinV
 # mfa dev build
 Montreal-Forced-Aligner
 
-# fleurs dataset
-data/fleurs/
+# data
+data
+
+# notes
+notes/
+
+# vscode
+.vscode/
