@@ -1,13 +1,13 @@
-"""Transcibe the words in the fleurs dataset using the Epitran library.
+"""Transcibe the words in fleurs and the textgrids using the Epitran library.
 Saves the transcription in a new column and saves the word to transcription dictionary in a tsv file.
 
 NOTE: The kinyarwanda g2p dictionary has to be copied into the epitran data directory manually (See README).
 
 Usage:
-    python transcribe_fleurs_epitran.py
+    python pronunciation_dictionary.py
 """
 
-from typing import List, Tuple, Any
+from typing import List
 
 import epitran.vector
 import pandas as pd
@@ -37,26 +37,39 @@ def generate_dict_entry(orthrographic_transcription, pronunciation_dict) -> None
     """Get the ipa representation of the transcriptions."""
     word_list = orthrographic_transcription.split()
     for word in word_list:
+        if word in pronunciation_dict:
+            continue
         word = clean_word(word)
         ipa = transcribe_word(word)
         pronunciation_dict[word] = ipa
 
 
 if __name__ == "__main__":
+    data_path = "../../data/"
     epi = epitran.vector.VectorsWithIPASpace("kin-Latn", ["kin-Latn"])
     fleurs = ["train", "test", "dev"]
+
+    words = set()
 
     all_pronunciations = {}
     for dataset in fleurs:
         df = pd.read_csv(
-            f"../../data/fleurs/{dataset}.tsv",
+            f"{data_path}fleurs/{dataset}.tsv",
             sep="\t",
             usecols=["orthographic_transcription"],
         )
-        for transcription in tqdm(df["orthographic_transcription"]):
-            generate_dict_entry(transcription, all_pronunciations)
+        words.update(df["orthographic_transcription"].unique())
 
-    with open("../../data/epifleur_pronunciation_dict.tsv", "w") as f:
+    with open(f"{data_path}tg_wordlist.txt") as f:
+        wordlist = f.readlines()
+    wordlist = [word.strip() for word in wordlist]
+
+    words.update(wordlist)
+
+    for word in tqdm(words):
+        generate_dict_entry(word, all_pronunciations)
+
+    with open("../../data/fleurtg_pronunciation_dict.tsv", "w+") as f:
         for key, value in all_pronunciations.items():
-            if value:
+            if value and value != [""]:
                 f.write("%s\t%s\n" % (key, " ".join(value)))
