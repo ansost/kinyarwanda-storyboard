@@ -25,7 +25,7 @@ cp kin-Latn.csv <path to your venv>/<your venv name>/lib/python3.11/site-package
 ```
 
 ## Generate alignments
-Run all scripts from within `code/scripts`. All scripts contain detailed documentation on their usage and what they do.
+Run all scripts from within `code/scripts` in the commandline. All scripts contain detailed documentation on their usage and what they do.
 
 1. Prepare the Text grids and delete unnecessary data using `tidy_cabinets.py`.
 2. Generate a pronunciation dictionary using `pronunciation_dictionary.py`.
@@ -33,15 +33,15 @@ Run all scripts from within `code/scripts`. All scripts contain detailed documen
 ```sh
 docker run -it mmcauliffe/montreal-forced-aligner
 ```
-4. Obtain the containr ID by running `docker ps` and then selecting it in the first column of the output. Then copy your data over with:
+4. In your shell (not the container shell), obtain the containr ID by running `docker ps` and then selecting it in the first column of the output. Then copy your data over with:
 ```sh
 docker cp <path to data> <container id>:/<path to data>
 ```
-5. Train the and generate alignments in the container using. Do not change the output directory.
+5. In the container shell, train the and generate alignments in the container using. Do not change the output directory.
 ```sh
 mfa train [OPTIONS] CORPUS_DIRECTORY DICTIONARY_PATH /home/mfauser/output/
 ```
-6. Copy the output back to your local machine:
+6. In your shell, copy the output back to your local machine:
 ```sh
 docker cp <container id>:/<path to data> <path to data>
 ```
