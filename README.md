@@ -2,14 +2,14 @@
 
 The goal of work package 2-DataSet is to create a data set containing nouns and verbs of spoken Kinyarwanda that will serve as basis for our modeling and experiments.
 
-# Pre-requisites
+## Pre-requisites
 > This code is tested on Manjaro 6.5.13-7 with 16×MD Ryzen 7 7730U and 22,4 GiB RAM.
-> With these specifications, all inidividual computations take less max. 10 minutes.
+> With these specifications, all individual computations take less max. 10 minutes.
 
 1. Get a copy of the repository via [git](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) or the [zip archive](https://github.com/ansost/kinyarwanda-storyboard/archive/refs/heads/main.zip).
 2. Install [Docker](https://docs.docker.com/get-docker/)
-3. Pull the forced aligner image. In you terminal:`docker pull mmcauliffe/montreal-forced-aligner:v2.2.16`
-4. Install [Python 3.11.6](https://www.python.org/downloads/release/python-3116/) (or make a [virtual environment](https://docs.python.org/3/tutorial/venv.html) with the same version).
+3. Pull the forced aligner image. In you terminal: `docker pull mmcauliffe/montreal-forced-aligner:v2.2.16`.
+4. Install [Python 3.11.6](https://www.python.org/downloads/release/python-3116/).
 5. Make a virtual environment to install the Python requirements from the root of the repository:
     ```sh
     python -m venv <name_of_venv>
